@@ -1,0 +1,49 @@
+def create_employee():
+    last_name = input("Введіть прізвище співробітника: ")
+    position = input("Введіть посаду співробітника: ")
+    efficiency_coefficient = float(input("Введіть коефіцієнт ефективності співробітника: "))
+    recent_projects = input("Введіть останні проекти співробітника, розділені комами: ").split(", ")
+    return {
+        "last_name": last_name,
+        "position": position,
+        "efficiency_coefficient": efficiency_coefficient,
+        "recent_projects": recent_projects
+    }
+
+def add_employee(database, employee):
+    database.append(employee)
+
+def remove_employee(database, last_name):
+    for emp in database:
+        if emp["last_name"] == last_name:
+            database.remove(emp)
+            print(f"{last_name} видалений з бази даних.")
+            return
+    print(f"Співробітника з прізвищем {last_name} не знайдено в базі даних.")
+
+def display_all_employees(database):
+    if not database:
+        print("Немає співробітників у базі даних.")
+        return
+    for emp in database:
+        print(f"Прізвище: {emp['last_name']}, Посада: {emp['position']}, Коефіцієнт ефективності: {emp['efficiency_coefficient']}, Останні проекти: {', '.join(emp['recent_projects'])}")
+
+# Приклад використання:
+if __name__ == "__main__":
+    # Створення бази даних
+    database = []
+
+    # Додавання співробітників
+    for _ in range(2):  
+        employee = create_employee()
+        add_employee(database, employee)
+
+    # Виведення всіх співробітників
+    display_all_employees(database)
+
+    # Видалення співробітника
+    last_name_to_remove = input("Введіть прізвище співробітника для видалення: ")
+    remove_employee(database, last_name_to_remove)
+
+    # Виведення всіх співробітників після видалення
+    display_all_employees(database)
